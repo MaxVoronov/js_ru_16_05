@@ -1,15 +1,19 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes, createClass } from 'react'
 import Article from './Article'
 import Chart from './Chart'
-import oneOpen from '../decorators/oneOpen'
+import oneOpen from '../mixins/oneOpen'
 
-class ArticleList extends Component {
+const ArticleListOld = createClass({
+    propTypes: {
+        articles: PropTypes.array.isRequired
+    },
+    mixins: [oneOpen],
     render() {
-        const { articles, openItem, isOpen } = this.props
+        const { articles } = this.props
         const articleItems = articles.map((article) => <li key={article.id}>
             <Article article = {article}
-                isOpen = {isOpen(article.id)}
-                toggleOpen = {openItem(article.id)}
+                isOpen = {this.isOpen(article.id)}
+                toggleOpen = {this.openItem(article.id)}
             />
         </li>)
         return (
@@ -21,10 +25,6 @@ class ArticleList extends Component {
             </div>
         )
     }
-}
+})
 
-ArticleList.propTypes = {
-    articles: PropTypes.array.isRequired
-}
-
-export default oneOpen(ArticleList)
+export default ArticleListOld

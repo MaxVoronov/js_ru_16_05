@@ -1,21 +1,14 @@
 import React, { PropTypes } from 'react'
 
 function Comment(props) {
-    const { comment } = props
+    const {comment: { text, name }} = props
     return (
-        <div key={comment.id}>
-            <h5>{comment.name}</h5>
-            {comment.text}
-        </div>
+        <div>{text} <b>by {name}</b></div>
     )
 }
 
 Comment.propTypes = {
-    comment: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired
-    })
+    comment: PropTypes.object.isRequired
 }
 
 export default Comment
