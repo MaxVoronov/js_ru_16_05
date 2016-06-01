@@ -1,8 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import { findDOMNode } from 'react-dom'
-import CommentList from './CommentList'
+import Body from './Body'
 import toggleOpen from '../decorators/toggleOpen'
-import { deleteArticle } from '../AC/articles'
+import { deleteArticle, loadArticleById } from '../AC/articles'
 import { commentStore } from '../stores'
 
 class Article extends Component {
@@ -23,6 +23,11 @@ class Article extends Component {
 
     }
 
+    componentWillReceiveProps(newProps) {
+        const {isOpen, article: { id, text, loading }} = newProps
+        if (isOpen && !text && !loading ) loadArticleById({ id })
+    }
+
     componentDidUpdate() {
     }
 
@@ -31,10 +36,7 @@ class Article extends Component {
         if (!article) return <h3>No article</h3>
 
         const { title, text, comments, id } = article
-        const textItem = isOpen ? <section>
-            {text}
-            <div><CommentList comments = {article.getRelation('comments')} ref="list" /></div>
-        </section> : null
+        const textItem = isOpen ? <Body article = {article} />: null
         return (
             <div>
                 <h3 onClick = {toggleOpen} ref="title">
@@ -57,7 +59,7 @@ Article.propTypes = {
     article: PropTypes.shape({
         title: PropTypes.string.isRequired,
         text: PropTypes.string,
-        id: PropTypes.string.isRequired
+        id: PropTypes.number.isRequired
     }),
 
     //From toggleOpen decorator
