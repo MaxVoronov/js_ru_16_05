@@ -11,3 +11,7 @@ export function loadArticleCall({ id }) {
 export function loadCommentsCall( { id }) {
     return $.get(`/api/comment?article=${id}`)
 }
+
+export function loadAllCommentsCall( { limit, offset } ) {
+    return $.get(`/api/comment?limit=${limit}&offset=${offset}`)
+}

@@ -17,6 +17,8 @@ export default class BasicStore extends EventEmitter {
 
     _add = (item) => this._items[item.id] = new DataWrapper(item, this)
 
+    _truncate = () => Object.keys(this._items).map(this._delete)
+
     getStores = () => this._stores
 
     addChangeListener(callback) {
