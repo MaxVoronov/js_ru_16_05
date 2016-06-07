@@ -25,6 +25,7 @@ class Comments extends Component {
         if(currentPage > 1) pagination.push(<Link to={`/comments/${currentPage - 1}`}>Prev page</Link>)
         if(currentPage < totalPages) pagination.push(<Link to={`/comments/${currentPage + 1}`}>Next page</Link>)
         pagination.push(<i>({currentPage}/{totalPages})</i>)
+        //здесь React должен ругаться на отсутствие key, по идее?
         return pagination.map((button) => { return(<span> {button} </span>) })
     }
 }
