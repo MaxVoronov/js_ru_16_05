@@ -16,7 +16,7 @@ export default class BasicStore extends EventEmitter {
     _delete = (id) => delete this._items[id]
 
     _add = (item) => this._items[item.id] = new DataWrapper(item, this)
-
+    //лучше .forEach - map подразумевает возвращение масива и дальнейшую с ним работу
     _truncate = () => Object.keys(this._items).map(this._delete)
 
     getStores = () => this._stores
